@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property name="LOGS" value="./logs/sample-application"/>
+
+  <appender name="Console"
+            class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>
+        %d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Kolkata} %5p --- %C{1} : %m%n
+      </Pattern>
+    </layout>
+  </appender>
+  <appender name="Application" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOGS}/sample-application-${hostname}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS}/archived/sample-application-${hostname}-%d{yyyy-MM-dd, Asia/Kolkata}.log
+      </fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Kolkata} %5p --- %C{1} : %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="Trace" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOGS}/trace-sample-application-${hostname}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS}/archived/trace-sample-application-${hostname}-%d{yyyy-MM-dd, Asia/Kolkata}.log
+      </fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Kolkata} %5p --- %C{1} : %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="Workflow" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOGS}/wk-sample-application--${hostname}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS}/archived/wk-sample-application-service-${hostname}-%d{yyyy-MM-dd, Asia/Kolkata}.log
+      </fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Kolkata} %5p --- %C{1} : %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOGS}/error-sample-application--${hostname}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS}/archived/error-sample-application-service-${hostname}-%d{yyyy-MM-dd, Asia/Kolkata}.log
+      </fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Kolkata} %5p --- %C{1} : %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="Trace" level="INFO" additivity="false">
+    <appender-ref ref="Trace"/>
+  </logger>
+<!--  <logger name="Workflow" level="INFO" additivity="false">-->
+<!--    <appender-ref ref="Workflow"/>-->
+<!--  </logger>-->
+  <logger name="Error" level="ERROR" additivity="false">
+    <appender-ref ref="Error"/>
+  </logger>
+
+  <!-- LOG everything at INFO level -->
+  <root level="info">
+    <appender-ref ref="Application"/>
+    <appender-ref ref="Console"/>
+  </root>
+</configuration>
